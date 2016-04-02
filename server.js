@@ -7,8 +7,9 @@ app.get('/', function (req, res) {
    res.send('This is the root page.');
 })
 
-app.get('/page1', function (req, res) {
-   res.send('This is a second page!');
+app.get('/index.html', function (req, res) {
+		
+		res.redirect('../public/images/' + req.query.img_req)}
 })
 
 var server = app.listen(8081, function () {
