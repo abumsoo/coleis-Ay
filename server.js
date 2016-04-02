@@ -17,24 +17,19 @@ app.get('/', function (req, res) {
    res.send('This is the root page.');
 })
 
-app.get('/twittertest', function (req, res) {
-   client.get('statuses/user_timeline', {screen_name: 'bumshakabum'}, function(error, tweets, response){
-   if(error) throw error;
-	    console.log(tweets);
-});
-})
-
 app.get('/index.html', function (req, res) {
-    console.log(res.query)
-		res.sendFile( __dirname + "/"+ "index.html");
+		res.sendFile( __dirname + "/" + "index.html");
 })
 
 app.get('/process_get', function (req, res){
-    console.log('heya')
-    console.log(req);
-    //res.redirect('./public/images/' + req.query)
-    res.redirect('/images/' + req.query.img_req + '.jpg');
-})
+    res.send('Retrieving Twitter data from: ' + req.query.act_req);
+    client.get('statuses/user_timeline', {screen_name: req.query.act_req}, function(error, tweets, response){
+    if(error) throw error;
+	console.log('=====================TWEETS FOR ' + req.query.act_req + "=====================");
+	console.log(tweets);
+});
+});
+
 
 var server = app.listen(8081, function () {
 
