@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+var notsorawdata = "";
 
 var Twitter = require('twitter');
 
@@ -23,10 +24,11 @@ app.get('/index.html', function (req, res) {
 
 app.get('/process_get', function (req, res){
     res.send('Retrieving Twitter data from: ' + req.query.act_req);
-    client.get('statuses/user_timeline', {screen_name: req.query.act_req}, function(error, tweets, response){
+    client.get('statuses/user_timeline', {screen_name: req.query.act_req, count: req.query.count_req}, function(error, tweets, response){
     if(error) throw error;
-	console.log('=====================TWEETS FOR ' + req.query.act_req + "=====================");
-	console.log(tweets);
+        for(i = 0; i<req.query.count_req; i++){
+            notsorawdata+=tweets[i].text + " "
+        }
 });
 });
 
