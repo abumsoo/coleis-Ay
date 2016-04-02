@@ -8,6 +8,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/index.html', function (req, res) {
+    console.log('hey')
     console.log(res.query)
 		res.sendFile( __dirname + "/"+ "index.html")
 })
