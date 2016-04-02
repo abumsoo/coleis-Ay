@@ -8,8 +8,15 @@ app.get('/', function (req, res) {
 })
 
 app.get('/index.html', function (req, res) {
-		
-		res.redirect('../public/images/' + req.query.img_req)}
+    console.log(res.query)
+		res.sendFile( __dirname + "/"+ "index.html")
+})
+
+app.get('process_get', function (req, res){
+    console.log('heya')
+    console.log(req)
+    //res.redirect('./public/images/' + req.query)
+    res.redirect('./public/images/jarjar.jpg')
 })
 
 var server = app.listen(8081, function () {
