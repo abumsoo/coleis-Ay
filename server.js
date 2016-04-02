@@ -17,6 +17,13 @@ app.get('/', function (req, res) {
    res.send('This is the root page.');
 })
 
+app.get('/twittertest', function (req, res) {
+   client.get('statuses/user_timeline', {screen_name: 'bumshakabum'}, function(error, tweets, response){
+   if(error) throw error;
+	    console.log(tweets);
+});
+})
+
 app.get('/index.html', function (req, res) {
     console.log(res.query)
 		res.sendFile( __dirname + "/"+ "index.html");
