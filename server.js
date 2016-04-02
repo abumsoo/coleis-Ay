@@ -32,36 +32,42 @@ app.get('/process_get', function (req, res){
 });
 });
 
-var domesticSecurity = [];
-var hazmatNuclear = [];
-var healthConcern = [];
-var infrastructure = [];
-var southwestBorderViolence = [];
-var terrorism = [];
-var weatherDisasterEmergency = [];
-var cyberSecurity = [];
+function getIndexOf(strArray, str1){
+    for(i=0;i<strArray.length;i++){
+        if(strArray[i]===str1){
+            return (i);
+        }
+    }
+    return (-1);
+}
 
 var fs = require('fs')
-var content = fs.readFileSync('words').toString();
+var giantWord;
 
-var gigantoreword = content.split(";")
-var giganlen = gigantoreword.length;
+var giantWord = fs.readFileSync('out0').toString();
+var domesticSecurity=giantWord.split(" +");
+var giantWord = fs.readFileSync('out1').toString();
+var hazmatNuclear=giantWord.split(" +");
+var giantWord =fs.readFileSync('out2').toString();
+var healthConcern=giantWord.split(" +");
+var giantWord = fs.readFileSync('out3').toString();
+var infrastructure=giantWord.split(" +");
+var giantWord = fs.readFileSync('out4').toString();
+var southwestBorderViolence=giantWord.split(" +");
+var giantWord = fs.readFileSync('out5').toString();
+var terrorism=giantWord.split(" +");
+var giantWord = fs.readFileSync('out6').toString();
+var weatherDisasterEmergency=giantWord.split(" +");
+var giantWord = fs.readFileSync('out7').toString();
+var cyberSecurity=giantWord.split(" +")
 
-domesticSecurity = gigantoreword.slice(0,gigantoreword.indexOf("hazmat"));
-hazmatNuclear = gigantoreword.slice(gigantoreword.indexOf("hazmat"),gigantoreword.indexOf("outbreak"));
-healthConcern = gigantoreword.slice(gigantoreword.indexOf("outbreak"),gigantoreword.indexOf("infrastructure security"));
-infrastructure = gigantoreword.slice(gigantoreword.indexOf("infrastructure security"),gigantoreword.indexOf("drug cartel"));
-southwestBorderViolence = gigantoreword.slice(gigantoreword.indexOf("drug cartel"),gigantoreword.indexOf("terrorism"));
-terrorism = gigantoreword.slice(gigantoreword.indexOf("terrorism"),gigantoreword.indexOf("emergency"));
-weatherDisasterEmergency = gigantoreword.slice(gigantoreword.indexOf("emergency"),gigantoreword.indexOf("cyber security"));
-cyberSecurity = gigantoreword.slice(gigantoreword.indexOf("cyber security"),(giganlen+1));
 
 //console.log(domesticSecurity);
 //console.log(hazmatNuclear);
 //console.log(healthConcern);
 //console.log(infrastructure);
 //console.log(southwestBorderViolence);
-console.log(terrorism);
+//console.log(terrorism);
 //console.log(weatherDisasterEmergency);
 //console.log(cyberSecurity);
 
