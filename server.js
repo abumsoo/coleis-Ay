@@ -1,4 +1,5 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 
 app.use(express.static('public'));
@@ -8,16 +9,15 @@ app.get('/', function (req, res) {
 })
 
 app.get('/index.html', function (req, res) {
-    console.log('hey')
     console.log(res.query)
-		res.sendFile( __dirname + "/"+ "index.html")
+		res.sendFile( __dirname + "/"+ "index.html");
 })
 
-app.get('process_get', function (req, res){
+app.get('/process_get', function (req, res){
     console.log('heya')
-    console.log(req)
+    console.log(req);
     //res.redirect('./public/images/' + req.query)
-    res.redirect('./public/images/jarjar.jpg')
+    res.redirect('/images/' + req.query.img_req + '.jpg');
 })
 
 var server = app.listen(8081, function () {
