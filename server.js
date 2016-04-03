@@ -14,6 +14,7 @@ var client = new Twitter({
 });
 
 app.use(express.static('public'));
+app.use(express.static('files'));
 
 app.get('/', function (req, res) {
    res.redirect('/index.html');
@@ -26,22 +27,26 @@ var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@
 var regex = new RegExp(expression);
 
 app.get('/process_get', function (req, res){
-    res.send('Retrieving Twitter data from: ' + req.query.act_req);
+    res.sendFile( __dirname + "/" + "data.html");
     client.get('statuses/user_timeline', {screen_name: req.query.act_req, count: req.query.count_req}, function(error, tweets, response){
         username = req.query.act_req;
     if(error) throw error;
         for(i = 0; i<req.query.count_req; i++){
             notSoRawData+=tweets[i].text + " "
         }
-        notSoRawData = notSoRawData.toLowerCase();
+        notSoRawData = String(notSoRawData).toLowerCase();
         notSoRawData = notSoRawData.replace(/(\r\n|\n|\r)/gm,"");
         notSoRawData = notSoRawData.replace(/\s+/g, " ");
         notSoRawData = notSoRawData.replace(regex, "")
-        console.log(notSoRawData)
+        //console.log(notSoRawData)
+		console.log(populateArray());
+		res.send(count);
 });
 });
- var fs = require('fs')
- var giantWord;
+
+
+var fs = require('fs')
+var giantWord;
 
 var giantWord = fs.readFileSync('out0').toString();
 var domesticSecurity=giantWord.split(" +");
@@ -59,8 +64,8 @@ var giantWord = fs.readFileSync('out6').toString();
 var weatherDisasterEmergency=giantWord.split(" +");
 var giantWord = fs.readFileSync('out7').toString();
 var cyberSecurity=giantWord.split(" +")
-
 var lessRawData = [0, 0, 0, 0, 0, 0, 0, 0];
+
 notSoRawData = notSoRawData.split();
 for(i=0;i<notSoRawData.length;i++){
 	for(j=0;j<domesticSecurity.length;j++){
@@ -104,8 +109,22 @@ for(i=0;i<notSoRawData.length;i++){
 		}
 	}
 }
+var count=0;
+var sectionArray=["Domestic Security","HAZMAT Nuclear","Infrastructure","Southwest Border Violence","Terrorism","Weather Disaster Emergency","Cyber Security"];
+var newSectionArray=[];
 
-document.getElementById("username").innerHTML=username;
+function populateArray(){
+	for(i=0;i<8;i++){
+		if(lessRawData[i]!=0){
+			newSectionArray.push(sectionArray[i])
+			count+=1;
+		}
+	}
+	return count;
+}
+//document.getElementById("username").innerHTML=username;
+//document.getElementById("posNum").innerHTML=count;
+//document.getElementById("litsArray").innerHTML=newSectionArray;
 
 //console.log(domesticSecurity);
 //console.log(hazmatNuclear);

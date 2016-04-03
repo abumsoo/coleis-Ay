@@ -4,31 +4,36 @@
   <head>
 
 	<meta charset="UTF-8">
-	<meta name="Data Shower" content="Data visualization.">
-	<meta name="" content="HTML,CSS,JavaScript">
-	<meta name="Bum Soo Kim and Cole Kenny" content="">
+			<meta name="Data Shower" content="Data visualization.">
+			<meta name="" content="HTML,CSS,JavaScript">
+			<meta name="Bum Soo Kim and Cole Kenny" content="">
 
-    <title>Watchlist Checker!</title>
+			<title>Watchlist Checker!</title>
 
-    <link href="public/styles.css" type="text/css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet" type="text/css">
+			<link href="styles.css" type="text/css" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet" type="text/css">
 
-  </head>
-  <body>
-    <div id="container">
-		<br class="gap">
-          <h1 id="username">PLACEHOLDER FOR TWITTER HANDLE DISPLAY FROM JS</h1>
-          <br class="space">
-		  <h3>What your data means.</h3>
-          <p>Our data shows that there is a chance that you are on <p id="posNum">PLACEHOLDER FOR # OF POSITIVE WATCHLIST HITS</p>government watchlists. 
-		  We used data from a Department of Homeland Security document that was realased in 2012, and according to this document, you could be on the 
-		  <p id="litsArray">PLACEHOLDER FOR WHAT LISTS THEY'RE ON</p>.
-		  <br class="space">
-		  This goes to show just how much the governent or other people can do with your data. We got all of this 
-		  information legally without asking permission. That's because everything you post to Twitter is public domain. 
-		  <br class="gap">
+		  </head>
+		  <body>
+			<div id="container">
+				<br class="gap">
+				  <h1 id="username"></h1>
+				  <br class="space">
+				  <h3>What your data means.</h3>
+				  <p>Our data shows that there is a chance that you are on <p id="posNum"></p>government watchlists. 
+				  We used data from a Department of Homeland Security document that was realased in 2012, and according to this document, you could be on the 
+				  <p id="litsArray"></p>.
+				  <br class="space">
+				  This goes to show just how much the governent or other people can do with your data. We got all of this 
+				  information legally without asking permission. That's because everything you post to Twitter is public domain. 
+				  <br class="gap">
 		  A whole lot more data is included with you public tweets as well. Things like timestamp, photos, people who retweeted, and even your location are obtainable 
 		  without you even knowing. </p>
     </div>
+	<script src="server.js" type=text/javascript" >
+		document.getElementById("username").innerHTML=username;
+		document.getElementById("posNum").innerHTML=count;
+		document.getElementById("litsArray").innerHTML=newSectionArray;
+	</script>
   </body>
   </html>
