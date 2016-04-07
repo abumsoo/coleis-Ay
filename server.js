@@ -13,38 +13,6 @@ var client = new Twitter({
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 });
 
-app.use(express.static('public'));
-app.use(express.static('files'));
-
-app.get('/', function (req, res) {
-   res.redirect('/index.html');
-})
-
-app.get('/index.html', function (req, res) {
-		res.sendFile( __dirname + "/" + "index.html");
-})
-var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-var regex = new RegExp(expression);
-
-app.get('/process_get', function (req, res){
-    res.sendFile( __dirname + "/" + "data.html");
-    client.get('statuses/user_timeline', {screen_name: req.query.act_req, count: req.query.count_req}, function(error, tweets, response){
-        username = req.query.act_req;
-    if(error) throw error;
-        for(i = 0; i<req.query.count_req; i++){
-            notSoRawData+=tweets[i].text + " "
-        }
-        notSoRawData = String(notSoRawData).toLowerCase();
-        notSoRawData = notSoRawData.replace(/(\r\n|\n|\r)/gm,"");
-        notSoRawData = notSoRawData.replace(/\s+/g, " ");
-        notSoRawData = notSoRawData.replace(regex, "")
-        //console.log(notSoRawData)
-		console.log(populateArray());
-		res.send(count);
-});
-});
-
-
 var fs = require('fs')
 var giantWord;
 
@@ -66,55 +34,90 @@ var giantWord = fs.readFileSync('out7').toString();
 var cyberSecurity=giantWord.split(" +")
 var lessRawData = [0, 0, 0, 0, 0, 0, 0, 0];
 
-notSoRawData = notSoRawData.split();
-for(i=0;i<notSoRawData.length;i++){
-	for(j=0;j<domesticSecurity.length;j++){
-		if(notSoRawData[i]==domesticSecurity[j]){
-			lessRawData[0]+=1;
-		}
-	}
-	for(j=0;j<hazmatNuclear.length;j++){
-	    if(notSoRawData[i]==hazmatNuclear[j]){
-	 		lessRawData[1]+=1;
-	 	}
-	}
-	for(j=0;j<healthConcern.length;j++){
-	 	if(notSoRawData[i]==healthConcern[j]){
-	 		lessRawData[2]+=1;
-	 	}
-	}
-	for(j=0;j<infrastructure.length;j++){
-	 	if(notSoRawData[i]==infrastructure[j]){
-	 		lessRawData[3]+=1;
-	 	}
-	}
-	for(j=0;j<southwestBorderViolence.length;j++){
-	 	if(notSoRawData[i]==southwestBorderViolence[j]){
-	 		lessRawData[4]+=1;
-	 	}
-	}
-	for(j=0;j<terrorism.length;j++){
-	 	if(notSoRawData[i]==terrorism[j]){
-	 		lessRawData[5]+=1;
-		}
-	}
-	for(j=0;j<weatherDisasterEmergency.length;j++){
-		if(notSoRawData[i]==weatherDisasterEmergency[j]){
-			lessRawData[6]+=1;
-		}
-	}
-	for(j=0;j<cyberSecurity.length;j++){
-		if(notSoRawData[i]==cyberSecurity[j]){
-			lessRawData[7]+=1;
-		}
-	}
-}
-var count=0;
-var sectionArray=["Domestic Security","HAZMAT Nuclear","Infrastructure","Southwest Border Violence","Terrorism","Weather Disaster Emergency","Cyber Security"];
-var newSectionArray=[];
+app.use(express.static('public'));
+app.use(express.static('files'));
 
-function populateArray(){
-	for(i=0;i<8;i++){
+app.get('/', function (req, res) {
+   res.redirect('/index.html');
+})
+
+app.get('/index.html', function (req, res) {
+		res.sendFile( __dirname + "/" + "index.html");
+})
+var expression = "/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi";
+var regex = new RegExp(expression);
+
+app.get('/process_get', function (req, res){
+    res.sendFile( __dirname + "/" + "data.html");
+    client.get('statuses/user_timeline', {screen_name: req.query.act_req, count: req.query.count_req}, function(error, tweets, response){
+        username = req.query.act_req;
+    if(error) throw error;
+        for(i = 0; i<req.query.count_req; i++){
+            notSoRawData+=tweets[i].text + " "
+        }
+        console.log(grouper())
+        console.log(populateArray(grouper()));
+	});
+});
+
+
+function grouper(){
+    notSoRawData = String(notSoRawData).toLowerCase();
+    notSoRawData = notSoRawData.replace(/(\r\n|\n|\r)/gm,"");
+    notSoRawData = notSoRawData.replace(/\s+/g, " ");
+    notSoRawData = notSoRawData.replace(regex, "")
+    notSoRawData = notSoRawData.split(" ");
+    for(i=0;i<notSoRawData.length;i++){
+	      for(j=0;j<domesticSecurity.length;j++){
+		        if(notSoRawData[i]==domesticSecurity[j]){
+			          lessRawData[0]+=1;
+		        }
+	      }
+	      for(j=0;j<hazmatNuclear.length;j++){
+	          if(notSoRawData[i]==hazmatNuclear[j]){
+	 		          lessRawData[1]+=1;
+	 	        }
+	      }
+	      for(j=0;j<healthConcern.length;j++){
+	 	        if(notSoRawData[i]==healthConcern[j]){
+	 		          lessRawData[2]+=1;
+	 	        }
+	      }
+	      for(j=0;j<infrastructure.length;j++){
+	 	        if(notSoRawData[i]==infrastructure[j]){
+	 		          lessRawData[3]+=1;
+	 	        }
+	      }
+	      for(j=0;j<southwestBorderViolence.length;j++){
+	 	        if(notSoRawData[i]==southwestBorderViolence[j]){
+	 		          lessRawData[4]+=1;
+	 	        }
+	      }
+	      for(j=0;j<terrorism.length;j++){
+	 	        if(notSoRawData[i]==terrorism[j]){
+	 		          lessRawData[5]+=1;
+		        }
+	      }
+	      for(j=0;j<weatherDisasterEmergency.length;j++){
+		        if(notSoRawData[i]==weatherDisasterEmergency[j]){
+			          lessRawData[6]+=1;
+		        }
+	      }
+	      for(j=0;j<cyberSecurity.length;j++){
+		        if(notSoRawData[i]==cyberSecurity[j]){
+			          lessRawData[7]+=1;
+		        }
+	      }
+    }
+    return lessRawData;
+}
+
+var someArray = [0, 23, 42, 3, 0, 0, 0, 0]
+function populateArray(lessRawData){
+    var count=0;
+    var sectionArray=["Domestic Security","HAZMAT Nuclear","Infrastructure","Southwest Border Violence","Terrorism","Weather Disaster Emergency","Cyber Security"];
+    var newSectionArray=[];
+    for(i=0;i<8;i++){
 		if(lessRawData[i]!=0){
 			newSectionArray.push(sectionArray[i])
 			count+=1;
@@ -122,6 +125,9 @@ function populateArray(){
 	}
 	return count;
 }
+
+console.log(grouper());
+
 //document.getElementById("username").innerHTML=username;
 //document.getElementById("posNum").innerHTML=count;
 //document.getElementById("litsArray").innerHTML=newSectionArray;
